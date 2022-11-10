@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+
+		<!-- Header Menu -->
+	<div th:fragment="header_menu">
+
+		<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+			<a class="navbar-brand" th:href="@{/}"> <img alt=""
+				th:src="@{/images/ShopmeAdminSmall.png}">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#topNavbar, #searchNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="topNavbar">
+				<ul class="nav navbar-nav">
+
+					<li class="nav-item"><a class="nav-link" href="">Careers</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="">Payments</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="">Shipping
+							&amp; Delivery</a></li>
+					<li class="nav-item"><a class="nav-link" href="">Login</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/register}">Register</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="">Contact</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	
+			<!-- Search Menu -->
+	<div th:fragment="search_nav" class="row">
+		<div class="col-md">
+			<nav class="navbar navbar-expand-sm bg-light">
+				<div class="collapse navbar-collapse" id="searchNavbar">
+					<form class="form-inline" th:action="@{/search}" method="get">
+						<input type="search" name="keyword" class="form-control mr-sm-2"
+							th:value="${keyword}"
+						 	placeholder="keyword" required/>
+						<input type="submit" class="btn btn-outline-success"/>
+					</form>
+				</div>
+			</nav>
+		</div>
+	</div>
+	
+		<!-- Footer Menu -->
+	<div th:fragment="footer_menu">
+		<div>
+			<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#bottomNavbar">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="bottomNavbar">
+					<ul class="nav navbar-nav">
+	
+						<li class="nav-item"><a class="nav-link" href="">About Us</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="">Privacy</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="">Returns &amp; Refunds</a></li>
+						
+					</ul>
+				</div>
+			</nav>
+		</div> <!-- Footer -->
+		<div th:fragment="footer" class="text-center m-3">
+			<p>[[${COPYRIGHT}]]</p>
+		</div>
+	</div>
+
+</body>
+</html>

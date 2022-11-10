@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head('Page Not Found Error - ShopMe', 'none') "/>
+<body>
+	<div class="container-fliud">
+
+		<!-- Navigation-bar -->
+		<div th:replace="navigation :: header_menu"></div>
+
+		<div class="text-center m-3">
+			<h2>Sorry, the requested page could not be found!</h2>
+		</div>
+
+
+		<!-- Footer Menu -->
+		<div th:replace="navigation :: footer_menu"></div>
+
+
+	</div>
+</body>
+</html>

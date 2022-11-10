@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head(${pageTitle}, 'none') "/>
+<body>
+	<div class="container-fliud">
+		<!-- Navigation-bar -->
+		<div th:replace="navigation :: header_menu"></div>
+				<!-- Search-bar -->
+		<div th:replace="navigation :: search_nav"></div>
+		<!-- BreadCrumb  Section-->
+		<div th:replace="breadcrumb :: content"></div>
+		
+		<div class="row m-2">
+			<div class="col-sm">
+				<div>
+					<img id="bigImage" th:src="@{${product.mainImagePath}}" class="img-fluid" index="0"/>
+				</div>
+				<div class="row justify-content-center">
+					<div class="m-2 border border-secondary p-1">
+						<img class="image-thumbnail" th:src="@{${product.mainImagePath}}" height="50px" width="50px" index="0"/>
+					</div>
+					<th:block th:each="extraImage, status : ${product.images}">
+						<div class="m-2 border border-secondary p-1">
+							<img class="image-thumbnail" th:src="@{${extraImage.imagePath}}" height="50px" width="50px" 
+								th:index="${status.count}"/>
+						</div>
+					</th:block>
+				</div>
+			</div>
+			<div class="col-sm">
+				<div>
+					<h2>[[${product.name}]]</h2>
+				</div>
+				<div>
+					<span>Brand: [[${product.brand.name}]]</span>
+				</div>
+				<div>
+					List Price: 
+					<span th:if="${product.discountPercent <= 0}">[[${CURRENCY_SYMBOL}]][[${product.price}]]</span>
+					<del><span th:if="${product.discountPercent > 0}"> [[${CURRENCY_SYMBOL}]][[${product.price}]]</span></del>
+				</div>
+				<div th:if="${product.discountPercent > 0}">
+					Price:
+					<span style="font-size: larger; color: darkred">[[${CURRENCY_SYMBOL}]][[${product.discountPrice}]]</span>
+					([[${product.discountPercent}]] % OFF)
+				</div>
+				<div>&nbsp;</div>
+				<div th:utext="${product.shortDescription}"></div>
+			</div>
+			<div class="col-sm-2">
+				<div>
+					<span th:if="${product.inStock}" class="text-success"><b>In Stock</b></span>
+					<span th:unless="${product.inStock}" class="text-danger"><b>Out of Stock</b></span>
+				</div>
+				<div class="mt-2">
+					<input type="text" size="5" value="1"/>
+				</div>
+				<div class="mt-2">
+					<input type="button" value="Add to Cart" class="btn btn-primary"/>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row m-2">
+			<div class="col-12">
+				<div><hr/></div>
+				<div>
+					<h3>Product Description:</h3>
+				</div>
+				<div th:utext="${product.fullDescription}"></div>
+			</div>
+		</div>
+		
+		<div class="row m-2">
+			<div class="col-12">
+				<div><hr/></div>
+				<div>
+					<h3>Product Details:</h3>
+				</div>
+				<th:block th:each="detail : ${product.details}">
+					<div>
+						<b>[[${detail.name}]]</b>:
+						<span> [[${detail.value}]]</span>
+					</div>
+				</th:block>
+			</div>
+		</div>
+		
+		<!-- Images Carousel -->
+	<div th:replace="products/images_carousel :: content"></div>
+	<!-- Footer -->
+		<div th:replace="navigation :: footer_menu"></div>
+	</div>
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		bigImage = $("#bigImage");
+		
+		$(".image-thumbnail").mouseover(function() {
+			currentImageSource = $(this).attr("src");
+			currentImageIndex = $(this).attr("index");
+			
+			bigImage.attr("src", currentImageSource);
+			bigImage.attr("index", currentImageIndex);
+		});
+		
+		bigImage.on("click", function(){
+			$("#carouselModal").modal("show");
+			imageIndex = parseInt(bigImage.attr("index"));
+			$("#carouselIndicators").carousel(imageIndex);
+		});
+		
+	});
+	
+	
+</script>
+</body>
+</html>

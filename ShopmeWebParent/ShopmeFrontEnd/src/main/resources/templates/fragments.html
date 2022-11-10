@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="page_head(title, remove)" th:remove="${remove}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+
+<title>[[${title}]] - [[${SITE_NAME}]]</title>
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+	<!-- Pages-link -->
+	<a th:fragment="page_link(moduleURL, pageNumber, label)" 
+		class="page-link"
+		th:href="@{${moduleURL} +'/page/' + ${pageNumber} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+${keyword != null ? '&keyword=' + keyword : '' } }">[[${label}]]</a>
+	
+		<!-- Pagination -->
+	<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
+		<div class="text-center m-1" th:if="${totalItems > 0}">
+			<span>Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of
+				[[${totalItems}]]</span>
+		</div>
+		<div class="text-center m-1" th:unless="${totalItems > 0}">
+			<span>NO [[${entityName}]] Found</span>
+		</div>
+		
+		<div th:if="${totalItems > 1}">
+			<nav>
+				<ul class="pagination justify-content-center flex-wrap">
+					<li
+						th:class="${currentPage > 1 ?'page-item' : 'page-item disabled'}">
+						<a th:replace="fragments :: page_link(${moduleURL}, 1, 'First')"></a>
+					</li>
+					<li
+						th:class="${currentPage > 1 ?'page-item' : 'page-item disabled'}">
+						<a
+						th:replace="fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')"></a>
+					</li>
+
+					<li
+						th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+						th:each="i : ${#numbers.sequence(1, totalPages)}"><a
+						th:replace="fragments :: page_link(${moduleURL}, ${i}, ${i})"></a></li>
+
+					<li
+						th:class="${currentPage < totalPages ?'page-item' : 'page-item disabled'}">
+						<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')"></a>
+					</li>
+					<li
+						th:class="${currentPage < totalPages ?'page-item' : 'page-item disabled'}">
+						<a th:replace="fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')"></a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+
+		<!-- Modal -->
+		<div th:fragment="modal_dialog" class="modal fade text-center"
+			id="modalDialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="modalTitle">Warning</h4>
+						<button type="button" data-dismiss="modal" class="close">&times;</button>
+					</div>
+					<div class="modal-body">
+						<span id="modalBody"></span>
+					</div>
+					<div class="modal-footer">
+						<button type="button" data-dismiss="modal" class="btn btn-danger">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+
+</body>
+</html>

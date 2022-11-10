@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments :: page_head(${PageTitle}, 'none') "/>
+<body>
+	<div class="container-fliud">
+		<!-- Navigation-bar -->
+		<div th:replace="navigation :: header_menu"></div>
+		<div>&nbsp;</div>
+		<div class="text-center m-3">
+			<h2>Customer Registration</h2>
+			<h4>You have register successfully as a customer.</h4>
+			<p>Please check your email to verify your account.</p>
+			<p><a th:href="@{/login}">Login here</a></p>
+		</div>
+		
+		<div>&nbsp;</div>
+
+	<!-- Footer -->
+		<div th:replace="navigation :: footer_menu"></div>
+	</div>
+</body>
+</html>
